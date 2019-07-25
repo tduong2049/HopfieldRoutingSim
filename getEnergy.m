@@ -74,11 +74,18 @@ b5 = u(5)/2 * b5
 b6 = 0;
 for i = 1:N
   for j = 1:N
-    for k = 1:N
-      if (k != i && k != j)
-        b6 = b6 + ((a(i,k) - 1) * (a(i,j) * a(i,j)));
-      endif
-    endfor
+    if (j != i)
+      sum = 0;
+    
+      for k = 1:N
+        if (k != i && k != j)
+          sum = sum + (a(i,k) - 1);
+        endif
+      endfor
+    
+      sum = sum * (a(i,j) * a(i,j));
+      b6 = b6 + sum;
+    endif
   endfor
 endfor
 b6 = u(6)/2 * b6
@@ -86,13 +93,53 @@ b6 = u(6)/2 * b6
 b7 = 0;
 for i = 1:N
   for j = 1:N
-    for k = 1:N
-      if (k != i && k != j)
-        b7 = b7 + ((a(k,j) - 1) * (a(i,j) * a(i,j)));
-      endif
-    endfor
+    if (j != i)
+      sum = 0;
+    
+      for k = 1:N
+        if (k != i && k != j)
+          sum = sum + (a(k,j) - 1);
+        endif
+      endfor
+    
+      sum = sum * (a(i,j) * a(i,j));
+      b7 = b7 + sum;
+    endif
   endfor
 endfor
 b7 = u(7)/2 * b7
 
-E = b1 + b2 + b3 + b4 + b5 + b6 + b7;
+b8 = 0;
+b81 = 0;
+b82 = 0;
+b83 = 0;
+for i = 1:N
+  for j = 1:N
+    if (j != i)
+      b81 = b81 + (t(i,j) * a(i,j));
+    endif    
+  endfor
+endfor
+b81 = t0 - b81;
+
+for i = 1:N
+  for j = 1:N
+    if (j != i)
+      b82 = b82 + (t(i,j) * a(i,j));
+    endif    
+  endfor
+endfor
+b82 = t0 - b82;
+
+for i = 1:N
+  for j = 1:N
+    if (j != i)
+      b83 = b83 + (t(i,j) * a(i,j));
+    endif    
+  endfor
+endfor
+b83 = t0 - b83;
+
+b8 = u(8)/2 * b81 * (b82 - abs(b83))
+
+E = b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8;

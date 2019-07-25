@@ -39,6 +39,9 @@ totalCost = sum(sum(costMat.*pathInclusionMat));
 terms = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000];
 
 energy = getEnergy(nodeCount, sourceNode, destinationNode, terms, 
-                   pathInclusionMat, connectionMat, delayMat, maxDelay, costMat);
+                   pathInclusionMat, connectionMat, delayMat, maxDelay, costMat)
 
-energy
+for count1 = 1:3
+  inputMat = randi(2, nodeCount, nodeCount) -1;
+  stateMat = 1./(1 + exp(-1 * inputMat));
+  stateMat = stateMat - diag(diag(stateMat));
