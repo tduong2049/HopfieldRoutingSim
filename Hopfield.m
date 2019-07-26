@@ -45,3 +45,13 @@ for count1 = 1:3
   inputMat = randi(2, nodeCount, nodeCount) -1;
   stateMat = 1./(1 + exp(-1 * inputMat));
   stateMat = stateMat - diag(diag(stateMat));
+  
+  for count2 = 1:10000
+    derSum = 0;
+    
+    for i = 1:nodeCount
+      for j = 1:nodeCount
+        for k = 1:nodeCount
+          for l = 1:nodeCount
+            if (l != k)
+              
